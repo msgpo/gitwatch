@@ -90,7 +90,7 @@ The prompt will say "cloning into ....". After that you can go into that directo
 and issue 'git pull' commands via the Gitwatch run.sh to get the latest commits
 and generate alerts.
 
-## Feedback and Roadmap
+## Roadmap
 This project is pretty much done. It serves the purpose it was needed for and there
 are no plans for improvement at this time.
 
