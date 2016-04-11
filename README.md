@@ -3,8 +3,7 @@ A generic method for sending email alerts for any git repo.
 
 This is a hack that shouldn't exist in a perfect world. This is only useful
 when there is no other way monitor changes or updates to a code repository.
-When possible, git hooks, APIs, or other organic methods should be used
-to do this.
+When possible, git hooks, APIs, or other organic methods should be used. 
 
 This hack was necessary to provide email alerts when a private gitlab wiki
 is updated. Hooks weren't fired and there was no native functionality
