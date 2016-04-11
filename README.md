@@ -28,7 +28,7 @@ you don't have local filesystem access, it might be a good idea to create an
 account for Gitwatch and allow it to clone using public key authentication.
 
 alert_file: "alert-list.md"  
-The Alert file is just a file in the repository that lists the email addresses
+The alert file is just a file in the repository that lists the email addresses
 that alerts should be sent to. Email addresses are extracted using a regular
 expression, so structure and organization of the file doesn't matter as long
 as it's text. In our case, we'er using a markdown file and editing it from
