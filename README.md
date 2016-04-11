@@ -77,7 +77,10 @@ After that, you're done.
 Gitlab and Github wikis use Gollum. Github has a nice API for tracking changes,
 you should use that if your wiki is there. Gitlab is a bit trickier. The repositories
 for wikis aren't exposed through the normal user interface, but they are available
-on the file system of the server. In order to clone them and use Gitwatch, login
+on the file system of the server. Unfortunately, when the Gitlab web UI commits to them
+no hooks are triggered, so we have to poll for changes.
+
+To use Gitwatch to watch a Gitlab wiki, login
 to your Gitlab server, go to the directory you want the cloned repo to reside,
 and then issue the following command:
 
