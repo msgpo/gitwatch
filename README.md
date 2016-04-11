@@ -1,6 +1,8 @@
 # Gitwatch
 Gitwatch is a generic method for sending email alerts when commits happen to a git repo.
 
+[[https://raw.githubusercontent.com/datamachines/gitwatch/master/logo.gif]]
+
 This is a hack that shouldn't exist in a perfect world. This is only useful
 when there is no other way monitor changes or updates to a code repository.
 When possible, git hooks, APIs, or other organic methods should be used.
