@@ -1,4 +1,7 @@
 #!/usr/bin/python
+# Gitwatch
+# Apache License v2
+# https://github.com/datamachines/gitwatch
 from __future__ import print_function
 import git
 from datetime import datetime
@@ -16,11 +19,20 @@ runfile = "runfile.yaml"
 # Set up configuraiton
 conf = yaml.safe_load(open(configfile))
 repo = git.Repo(conf['repo_dir'])
+
+# now is a time that is only read once at the beginning of program execution.
+# Since it is later written to the runfile, we want to keep it as atomic
+# as possible.
 now = datetime.now()
 
+# logtime is read just prior to most log messages and is used to tag log output
 logtime = datetime.now().isoformat()
 print(logtime, "Initialized. Now:", int(now.strftime("%s")))
 
+# writes our runfile to disk.
+# TODO: write a test mode so we can ensure the filesystem is writable before.
+# going into the rest of the program. That will account for the edge case that
+# he filesystem state changes after Gitwatch is initially installed.
 def write_runfile(run):
     try:
         with open(runfile, 'w') as outfile:
@@ -30,6 +42,7 @@ def write_runfile(run):
         print(logtime, "ERROR - Unable to write runfile.")
         exit(1)
 
+# This works with AWS SES
 def send_smtp_email(email_to, email_subject, email_body):
     logtime = datetime.now().isoformat()
     num_recepients = len(email_to)
@@ -55,6 +68,8 @@ def send_smtp_email(email_to, email_subject, email_body):
         return 0
     return 1
 
+# We try to read the runfile to get the last run time. If it doesn't exist
+# we create one and exit cleanly.
 try:
     run = yaml.safe_load(open(runfile))
 except IOError:
@@ -67,6 +82,8 @@ except IOError:
     write_runfile(run)
     exit(0)
 
+# Here, we grab anything that looks like an email address from the alert-list
+# file in the repo.
 try:
     ee = re.compile(("([a-z0-9!#$%&'*+\/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+\/=?^_`"
                     "{|}~-]+)*(@|\sat\s)(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(\.|"
@@ -85,6 +102,8 @@ print(logtime, "Last run:", run['lastrun'])
 commits = list(repo.iter_commits('master'))
 alert_queue = []
 
+# Iterate through the commits sending email alerts for commits that have
+# happened after the time recorded in our runtime file.
 for i in range(0,len(commits)):
     commit = commits[i]
     if commit.committed_date > run['lastrun']:
@@ -105,8 +124,8 @@ for i in range(0,len(commits)):
 
         #print(datetime.utcfromtimestamp(commit.committed_date).isoformat())
 
+# Write the atomic time now to the runfile and then exit cleanly. 
 run['lastrun'] = int(now.strftime("%s"))
-
 #TODO: Comment the next line to keep running with a specified runtime
 # useful when testing, pick a runtime ecpoch that only has one commit after it.
 write_runfile(run)
