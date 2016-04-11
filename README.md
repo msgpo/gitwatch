@@ -1,5 +1,5 @@
 # gitwatch
-A generic method for sending email alerts when commits happen to a git repo.
+Gitwatch is a generic method for sending email alerts when commits happen to a git repo.
 
 This is a hack that shouldn't exist in a perfect world. This is only useful
 when there is no other way monitor changes or updates to a code repository.
@@ -45,3 +45,34 @@ smtp_port: 465
 smtp_max_recepients_per_email: 50  
 These email configuration options should be self explanatory. This code was
 developed using AWS SES but should work with any smtp server.
+
+## Scheduling and runtime
+On first run, gitwatch will do nothing but record the current time to a runfile
+in it's local directory. In this runfile, the current time is recorded. Subsequent
+runs of gitwatch will use and maintain this time as a basis for determining which
+commits should generate email alerts. Only commits that happen after the time in this
+file will generate email alerts.
+
+The run.sh file contains code which updates your local copy of the repository.
+Since there are many ways to do this, you'll have to decide what works best for you.
+In our case, we change directory to the code respository and then issue a 'git pull'
+command. The next command in the run.sh initiates the gitwatch.py script by pointing
+it at the location of your configuration file. We recommend copying run.sh and the
+configuration file outside of the gitwatch directory and giving them both descriptive
+names. That way, new repositories can be watched by copying and configuring more of
+these files.
+
+Scheduling of the watcher can be initiated in any way. To keep it simple, we
+just used cron. A more robust solution might be to add a loop to your version
+of run.sh and manage it in supervisord.
+
+To add your run.sh script to cron and run it every minute, type 'crontab -e' and
+add the following line to your cron file:
+
+    * * * * * /full/path/to/your/descriptively-named-run.sh
+
+After that, you're done.
+
+## Feedback and Roadmap
+This project is pretty much done. It serves the purpose it was needed for and there
+are no plans for improvement at this time.
