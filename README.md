@@ -13,7 +13,7 @@ for alerting at the time of this writing. So here we are.
 
 ## Use
 Step 1: Copy the file config-example.yaml to a safe place and edit the variables.  
-Step 2: Edit run.sh and add it to a cron job that runs as often as you want updates.   
+Step 2: Edit run.sh and add it to a cron job.   
 Step 3: Profit.
 
 ## Configuration variables
