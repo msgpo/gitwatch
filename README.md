@@ -35,12 +35,12 @@ md_link_prefix: "https://urlprefixtoyourfiles/"
 This link and link prefix is used to create href links within the alert email.
 Clicking on this link should take you to the repository.
 
-smtp_subject: "A descriptive subject"
-smtp_username: nerfed-for-github
-smtp_password: nerfed-for-github
-smtp_server: email-smtp.us-east-1.amazonaws.com
-smtp_from: Gitlab <noreply@whereeveryourgitlabis.com>
-smtp_port: 465
-smtp_max_recepients_per_email: 50
+smtp_subject: "A descriptive subject"  
+smtp_username: nerfed-for-github  
+smtp_password: nerfed-for-github  
+smtp_server: email-smtp.us-east-1.amazonaws.com  
+smtp_from: Gitlab <noreply@whereeveryourgitlabis.com>  
+smtp_port: 465  
+smtp_max_recepients_per_email: 50  
 These email configuration options should be self explanatory. This code was
 developed using AWS SES but should work with any smtp server.
