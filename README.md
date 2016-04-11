@@ -73,6 +73,20 @@ add the following line to your cron file:
 
 After that, you're done.
 
+## Using this to watch GitLab wikis.
+Gitlab and Github wikis use Gollum. Github has a nice API for tracking changes,
+you should use that if your wiki is there. Gitlab is a bit trickier. The repositories
+for wikis aren't exposed through the normal user interface, but they are available
+on the file system of the server. In order to clone them and use Gitwatch, login
+to your Gitlab server, go to the directory you want the cloned repo to reside,
+and then issue the following command:
+
+    git clone /var/opt/gitlab/git-data/repositories/YOUR-WIKI-NAME/
+
+The prompt will say "cloning into ....". After that you can go into that directory
+and issue 'git pull' commands via the Gitwatch run.sh to get the latest commits
+and generate alerts.
+
 ## Feedback and Roadmap
 This project is pretty much done. It serves the purpose it was needed for and there
 are no plans for improvement at this time.
