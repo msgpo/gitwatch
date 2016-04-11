@@ -1,6 +1,6 @@
 #!/usr/bin/python
 from __future__ import print_function
-from git import Repo
+import git
 from datetime import datetime
 import yaml
 import re
@@ -15,7 +15,7 @@ runfile = "runfile-example.yaml"
 
 # Set up configuraiton
 conf = yaml.safe_load(open(configfile))
-repo = Repo(conf['repo_dir'])
+repo = git.Repo(conf['repo_dir'])
 now = datetime.now()
 
 logtime = datetime.now().isoformat()
@@ -90,25 +90,18 @@ for i in range(0,len(commits)):
     if commit.committed_date > run['lastrun']:
         isodtg = datetime.utcfromtimestamp(commit.committed_date).isoformat()
         subject = conf['smtp_subject'] + " by " + commit.author.name
-        print(commit)
-        body = "<html>\n" + isodtg + " GMT<br>\n" \
-            + "The following files were modified:<br>\n"
         print("Subject:",subject)
+        body = "<html>\n" \
+            + "The following files were modified:<br>\n"
 
-        
-        print(repo.diff(commits[i],commits[i - 1]))
-
-        for item in commit.tree.traverse():
-            linkname = re.sub('\.md|\.markdown','',item.name)
-            body += "<a href=" + conf['md_link_prefix'] + linkname + ">" \
-                + linkname + "</a><br>\n"
-
-
+        body += "\n\n<pre>\n" + repo.git.show(commits[i]) + "\n</pre>\n<br><br>"
+        body += "<a href=\"" + conf['md_link_prefix'] + "\">" \
+            + conf['md_link_prefix'] + "</a><br>\n"
         body += "<br>\nCommit: " + str(commit) + "<br>\n" \
             + "Timestamp: " + str(commit.committed_date) + "<br>\n" \
             + "</html>\n"
         print("Body:",body)
-        #send_smtp_email(emails, subject, body)
+        send_smtp_email(emails, subject, body)
 
         #print(datetime.utcfromtimestamp(commit.committed_date).isoformat())
 
@@ -116,5 +109,5 @@ run['lastrun'] = int(now.strftime("%s"))
 
 #TODO: Comment the next line to keep running with a specified runtime
 # useful when testing, pick a runtime ecpoch that only has one commit after it.
-#write_runfile(run)
+write_runfile(run)
 exit(0)
