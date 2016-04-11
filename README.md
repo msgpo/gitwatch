@@ -94,4 +94,4 @@ are no plans for improvement at this time.
 If you do end up using git hooks to send email alerts showing changes, the gitwatch.py
 script is probably useful. If you end up doing this in reusable and useful way, please
 send a pull request to this repo so we can document that use case. I know it's possible
-I just haven't done it yet. Using a hook is much cleaner than using cron.
+I just haven't done it yet. Using a hook would be much cleaner than using cron.
