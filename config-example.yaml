@@ -1,0 +1,10 @@
+repo_dir: "/directory/of/the/cloned/repo/on/the/filesystem/"
+alert_file: "alert-list.md"
+md_link_prefix: "https://urlprefixtoyourfiles/"
+smtp_subject: "A descriptive subject"
+smtp_username: nerfed-for-github
+smtp_password: nerfed-for-github
+smtp_server: email-smtp.us-east-1.amazonaws.com
+smtp_from: Gitlab <noreply@whereeveryourgitlabis.com>
+smtp_port: 465
+smtp_max_recepients_per_email: 50
