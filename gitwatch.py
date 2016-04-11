@@ -11,7 +11,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 
 configfile = sys.argv[1]
-runfile = "runfile-example.yaml"
+runfile = "runfile.yaml"
 
 # Set up configuraiton
 conf = yaml.safe_load(open(configfile))
