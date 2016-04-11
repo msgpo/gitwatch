@@ -85,7 +85,8 @@ print(logtime, "Last run:", run['lastrun'])
 commits = list(repo.iter_commits('master'))
 alert_queue = []
 
-for commit in commits:
+for i in range(0,len(commits)):
+    commit = commits[i]
     if commit.committed_date > run['lastrun']:
         isodtg = datetime.utcfromtimestamp(commit.committed_date).isoformat()
         subject = conf['smtp_subject'] + " by " + commit.author.name
@@ -93,15 +94,26 @@ for commit in commits:
         body = "<html>\n" + isodtg + " GMT<br>\n" \
             + "The following files were modified:<br>\n"
         print("Subject:",subject)
+
+        changed_files = set()
+        for cf in commits[i].diff(commits[i - 1]):
+            if cf.a_blob.path:
+                changed_files.add(cf.a_blob.path)
+            #if cf.b_blob.path:
+            #    changed_files.add(cf.b_blob.path)
+        print("CF:",changed_files)
+
         for item in commit.tree.traverse():
             linkname = re.sub('\.md|\.markdown','',item.name)
             body += "<a href=" + conf['md_link_prefix'] + linkname + ">" \
                 + linkname + "</a><br>\n"
+
+
         body += "<br>\nCommit: " + str(commit) + "<br>\n" \
             + "Timestamp: " + str(commit.committed_date) + "<br>\n" \
             + "</html>\n"
         print("Body:",body)
-        send_smtp_email(emails, subject, body)
+        #send_smtp_email(emails, subject, body)
 
         #print(datetime.utcfromtimestamp(commit.committed_date).isoformat())
 
@@ -109,5 +121,5 @@ run['lastrun'] = int(now.strftime("%s"))
 
 #TODO: Comment the next line to keep running with a specified runtime
 # useful when testing, pick a runtime ecpoch that only has one commit after it.
-write_runfile(run)
+#write_runfile(run)
 exit(0)
