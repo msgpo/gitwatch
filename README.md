@@ -20,7 +20,7 @@ repo_dir: "/directory/of/the/cloned/repo/on/the/filesystem/"
 Clone your repo to a nearby directory, this should be that directory.
 Subsequent pull operations have to
 be accomplished without typing in login credentials. In our case the server
-side of the repo (the directory with the .git) extension is elsewhere on the
+side of the repo (the directory with the .git extension) is elsewhere on the
 same server, so pull operations are very cheap and don't require credentials. If
 you don't have local filesystem access, it might be a good idea to create an
 account for gitwatch and allow it to clone using public key authentication.
