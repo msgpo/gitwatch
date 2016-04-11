@@ -90,7 +90,7 @@ for commit in commits:
         isodtg = datetime.utcfromtimestamp(commit.committed_date).isoformat()
         subject = conf['smtp_subject'] + " by " + commit.author.name
         print(commit)
-        body = "<html>\n" + isodtg + "<br>\n" \
+        body = "<html>\n" + isodtg + " GMT<br>\n" \
             + "The following files were modified:<br>\n"
         print("Subject:",subject)
         for item in commit.tree.traverse():
