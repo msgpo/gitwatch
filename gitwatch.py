@@ -95,13 +95,8 @@ for i in range(0,len(commits)):
             + "The following files were modified:<br>\n"
         print("Subject:",subject)
 
-        changed_files = set()
-        for cf in commits[i].diff(commits[i - 1]):
-            if cf.a_blob.path:
-                changed_files.add(cf.a_blob.path)
-            #if cf.b_blob.path:
-            #    changed_files.add(cf.b_blob.path)
-        print("CF:",changed_files)
+        
+        print(repo.diff(commits[i],commits[i - 1]))
 
         for item in commit.tree.traverse():
             linkname = re.sub('\.md|\.markdown','',item.name)
