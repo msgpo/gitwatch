@@ -8,3 +8,4 @@ smtp_server: email-smtp.us-east-1.amazonaws.com
 smtp_from: Gitlab <noreply@whereeveryourgitlabis.com>
 smtp_port: 465
 smtp_max_recepients_per_email: 50
+threshold: 7200

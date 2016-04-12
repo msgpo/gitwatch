@@ -45,6 +45,12 @@ def write_runfile(run):
 # This works with AWS SES
 def send_smtp_email(email_to, email_subject, email_body):
     logtime = datetime.now().isoformat()
+    timeNow = int(datetime.now().strftime("%s"))
+    threshold = conf['threshold']
+    delta = timeNow - run['lastrun']
+    if delta > threshold:
+        print('The difference between our lastrun and now is %d seconds...\nCheck if the server is down.' % (delta))
+        return 1
     num_recepients = len(email_to)
     if num_recepients > conf['smtp_max_recepients_per_email']:
         print(logtime, 'ERROR - Too many recepients.')
