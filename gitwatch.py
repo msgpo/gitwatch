@@ -48,6 +48,7 @@ def send_smtp_email(email_to, email_subject, email_body):
     timeNow = int(datetime.now().strftime("%s"))
     threshold = conf['threshold']
     delta = timeNow - run['lastrun']
+    # Stop sending emails once delta is too large
     if delta > threshold:
         print('The difference between our lastrun and now is %d seconds...\nCheck if the server is down.' % (delta))
         return 1
